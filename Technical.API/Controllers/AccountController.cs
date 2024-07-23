@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Technical.API.Data;
-using Technical.API.Models.Dtos;
-using Technical.API.Models.Dtos.Auth;
+﻿using Microsoft.AspNetCore.Mvc;
+using Technical.API.Models.Identity.Request;
+using Technical.API.Models.Identity.Response;
 using Technical.API.Repository.Auth;
 
 namespace Technical.API.Controllers
@@ -27,7 +23,7 @@ namespace Technical.API.Controllers
             var response = await _authService.Login(request);
             if (response == null)
             {
-                return BadRequest(response);
+                return Unauthorized();
             }
             return Ok(response);
         }

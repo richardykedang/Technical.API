@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Technical.API.Models
+namespace Technical.API.Models.StorageLoc
 {
     public class StorageLocation
     {

@@ -1,4 +1,4 @@
-﻿namespace Technical.API.Models.Dtos.Auth
+﻿namespace Technical.API.Models.Identity.Response
 {
     public class LoginResponse
     {

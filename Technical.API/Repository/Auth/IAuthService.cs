@@ -1,4 +1,5 @@
-﻿using Technical.API.Models.Dtos.Auth;
+﻿using Technical.API.Models.Identity.Request;
+using Technical.API.Models.Identity.Response;
 
 namespace Technical.API.Repository.Auth
 {
