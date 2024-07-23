@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Technical.API.Data.Configurations;
 using Technical.API.Models;
+using Technical.API.Models.Bpkp;
 using Technical.API.Models.StorageLoc;
 
 namespace Technical.API.Data

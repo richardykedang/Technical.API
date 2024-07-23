@@ -1,4 +1,6 @@
-﻿namespace Technical.API.Models.StorageLoc.Response
+﻿using Technical.API.Models.Bpkp;
+
+namespace Technical.API.Models.StorageLoc.Response
 {
     public class LocationResponse
     {

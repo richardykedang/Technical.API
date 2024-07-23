@@ -7,6 +7,7 @@ using Technical.API.Data;
 using Technical.API.Models;
 using Technical.API.Models.Identity;
 using Technical.API.Repository.Auth;
+using Technical.API.Repository.Bpkp;
 using Technical.API.Repository.Storage;
 
 namespace Technical.API
@@ -26,7 +27,9 @@ namespace Technical.API
                .AddDefaultTokenProviders();
 
             services.AddTransient<IAuthService, AuthServices>();
+            services.AddTransient<IUserService, UserService>();
             services.AddScoped<ILocationService, LocationService>();
+            services.AddScoped<IBpkpService, BpkpService>();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

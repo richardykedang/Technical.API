@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Technical.API.Models.Bpkp;
 
 namespace Technical.API.Models.StorageLoc
 {

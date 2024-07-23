@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Technical.API.Models.StorageLoc;
 
-namespace Technical.API.Models
+namespace Technical.API.Models.Bpkp
 {
     public class Bpkb
     {

@@ -8,5 +8,6 @@ namespace Technical.API.Repository.Storage
     {
         Task<IEnumerable<LocationResponse>> GetAsync();
         Task<string> CreateAsync(LocationRequest request);
+        Task<StorageLocation> ExistAsync(string id);
     }
 }

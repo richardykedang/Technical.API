@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Technical.API.Data;
 using Technical.API.Models;
+using Technical.API.Models.Bpkp;
 using Technical.API.Models.StorageLoc;
 using Technical.API.Models.StorageLoc.Request;
 using Technical.API.Models.StorageLoc.Response;
@@ -49,5 +50,12 @@ namespace Technical.API.Repository.Storage
                 }).ToList()
             });
         }
+
+        public async Task<StorageLocation> ExistAsync(string id)
+        {
+            var storageLocation = await _context.StorageLocations.FirstOrDefaultAsync(x => x.LocationId == id);
+            return storageLocation;
+        }
+
     }
 }
