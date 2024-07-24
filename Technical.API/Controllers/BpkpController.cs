@@ -15,7 +15,7 @@ namespace Technical.API.Controllers
 {
     [Route("api/bpkp")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class BpkpController : ControllerBase
     {
         private readonly IBpkpService _bpkpService;
@@ -31,11 +31,11 @@ namespace Technical.API.Controllers
             _response = new ResponseDto();
         }
 
-        // GET: api/Hotels
+   
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BpkbResponse>>> GetBpkp()
+        public async Task<ActionResult<IEnumerable<BpkbResponse>>> GetBpkp([FromQuery] bool isLoggedInUser = false)
         {
-            var response = await _bpkpService.GetAsync();
+            var response = await _bpkpService.GetAsync(isLoggedInUser);
             if (response == null)
             {
                 _response.IsSuccess = false;
@@ -47,7 +47,7 @@ namespace Technical.API.Controllers
             return Ok(_response);
         }
 
-        // POST api/<LeaveTypeController>
+      
         [HttpPost]
         public async Task<ActionResult> Post(BpkpRequest request)
         {

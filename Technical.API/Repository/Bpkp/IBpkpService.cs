@@ -9,7 +9,7 @@ namespace Technical.API.Repository.Bpkp
 {
     public interface IBpkpService
     {
-        Task<IEnumerable<BpkbResponse>> GetAsync();
+        Task<IEnumerable<BpkbResponse>> GetAsync(bool isLoggedInUser);
         Task<Bpkb> CreateAsync(Bpkb request);
         
     }

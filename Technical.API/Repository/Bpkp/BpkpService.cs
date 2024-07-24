@@ -13,12 +13,12 @@ namespace Technical.API.Repository.Bpkp
     public class BpkpService : IBpkpService
     {
         private readonly AppDbContext _context;
+        private readonly IUserService _userService;
 
-
-        public BpkpService(AppDbContext context)
+        public BpkpService(AppDbContext context, IUserService userService)
         {
             this._context = context;
-
+            this._userService = userService;
         }
         public async Task<Bpkb> CreateAsync(Bpkb request)
         {
@@ -28,9 +28,26 @@ namespace Technical.API.Repository.Bpkp
         }
 
 
-        public async Task<IEnumerable<BpkbResponse>> GetAsync()
+        public async Task<IEnumerable<BpkbResponse>> GetAsync(bool isLoggedInUser)
         {
-            var bpkbs = await _context.Bpkbs.Include(b => b.StorageLocation).ToListAsync();
+            // Ambil data pengguna (hanya satu query)
+            var users = await _context.Users.ToDictionaryAsync(u => u.Id, u => u.UserName);
+
+            IQueryable<Bpkb> query = _context.Bpkbs.Include(b => b.StorageLocation);
+
+            if (isLoggedInUser)
+            {
+                // Ambil nama pengguna saat ini
+                var currentUser = _userService.UserId;
+
+                // Ambil ID pengguna dari nama pengguna saat ini
+                var userId = _context.Users.FirstOrDefault(u => u.Id == currentUser)?.Id;
+
+                // Filter BPKB berdasarkan ID pengguna saat ini
+                query = query.Where(bpkb => bpkb.CreatedBy == userId);
+            }
+
+            var bpkbs = await query.ToListAsync();
 
             var result = bpkbs.Select(bpkb => new BpkbResponse
             {
@@ -44,9 +61,7 @@ namespace Technical.API.Repository.Bpkp
                 PoliceNo = bpkb.PoliceNo,
                 LocationId = bpkb.LocationId,
                 LocationName = bpkb.StorageLocation?.LocationName,
-                CreatedBy = _context.Users.Where(u => u.Id == bpkb.CreatedBy)
-                .Select(u => u.UserName)
-                .FirstOrDefault()
+                CreatedBy = users.TryGetValue(bpkb.CreatedBy, out var userName) ? userName : "Unknown"
             }).ToList();
 
             return result;
