@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Technical.API.Models.StorageLoc;
 
 namespace Technical.API.Models.Bpkp
@@ -22,6 +23,9 @@ namespace Technical.API.Models.Bpkp
         public DateTime CreatedOn { get; set; }
         public string LastUpdatedBy { get; set; }
         public DateTime LastUpdatedOn { get; set; }
+
+        [JsonIgnore]
+
         public virtual StorageLocation StorageLocation { get; set; }
     }
 }

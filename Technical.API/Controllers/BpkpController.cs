@@ -15,7 +15,7 @@ namespace Technical.API.Controllers
 {
     [Route("api/bpkp")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class BpkpController : ControllerBase
     {
         private readonly IBpkpService _bpkpService;
