@@ -63,7 +63,8 @@ namespace Technical.API.Repository.Auth
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("uid", user.Id)
+                new Claim("uid", user.Id),
+                new Claim(ClaimTypes.Name, user.UserName)
 
             }
             .Union(userClaimns)

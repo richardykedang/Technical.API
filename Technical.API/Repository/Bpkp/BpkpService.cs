@@ -13,12 +13,12 @@ namespace Technical.API.Repository.Bpkp
     public class BpkpService : IBpkpService
     {
         private readonly AppDbContext _context;
-        
+
 
         public BpkpService(AppDbContext context)
         {
             this._context = context;
-            
+
         }
         public async Task<Bpkb> CreateAsync(Bpkb request)
         {
@@ -27,12 +27,12 @@ namespace Technical.API.Repository.Bpkp
             return request;
         }
 
-        
+
         public async Task<IEnumerable<BpkbResponse>> GetAsync()
         {
             var bpkbs = await _context.Bpkbs.Include(b => b.StorageLocation).ToListAsync();
-            
-            return bpkbs.Select(bpkb => new BpkbResponse
+
+            var result = bpkbs.Select(bpkb => new BpkbResponse
             {
                 AgreementNumber = bpkb.AgreementNumber,
                 BranchId = bpkb.BranchId,
@@ -44,9 +44,12 @@ namespace Technical.API.Repository.Bpkp
                 PoliceNo = bpkb.PoliceNo,
                 LocationId = bpkb.LocationId,
                 LocationName = bpkb.StorageLocation?.LocationName,
-                
-
+                CreatedBy = _context.Users.Where(u => u.Id == bpkb.CreatedBy)
+                .Select(u => u.UserName)
+                .FirstOrDefault()
             }).ToList();
+
+            return result;
         }
     }
 }

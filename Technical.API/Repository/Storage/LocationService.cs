@@ -41,13 +41,14 @@ namespace Technical.API.Repository.Storage
             {
                 
                 LocationName = sl.LocationName,
-                Bpkbs = sl.Bpkbs.Select(b => new Bpkb
-                {
-                    AgreementNumber = b.AgreementNumber,
-                    BpkbNo = b.BpkbNo,
-                    BpkbDate = b.BpkbDate
-                    // Map other properties as needed
-                }).ToList()
+                LocationId = sl.LocationId,
+                //Bpkbs = sl.Bpkbs.Select(b => new Bpkb
+                //{
+                //    AgreementNumber = b.AgreementNumber,
+                //    BpkbNo = b.BpkbNo,
+                //    BpkbDate = b.BpkbDate
+                //    // Map other properties as needed
+                //}).ToList()
             });
         }
 

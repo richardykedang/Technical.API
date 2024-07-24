@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Technical.API.Models;
 using Technical.API.Models.Bpkp;
 using Technical.API.Models.Bpkp.Request;
 using Technical.API.Models.Bpkp.Response;
@@ -11,50 +12,53 @@ using Technical.API.Repository.Storage;
 
 namespace Technical.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/bpkp")]
     [ApiController]
     public class BpkpController : ControllerBase
     {
         private readonly IBpkpService _bpkpService;
         private readonly ILocationService _locationService;
         private readonly IUserService _userService;
+        private ResponseDto _response;
 
         public BpkpController(IBpkpService bpkpService, ILocationService locationService, IUserService userService)
         {
             this._bpkpService = bpkpService;
             this._locationService = locationService;
             this._userService = userService;
+            _response = new ResponseDto();
         }
 
         // GET: api/Hotels
-        [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<LocationResponse>>> GetBpkp()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<BpkbResponse>>> GetBpkp()
         {
             var response = await _bpkpService.GetAsync();
             if (response == null)
             {
-                return BadRequest(response);
+                _response.IsSuccess = false;
+                _response.Message = "Retrieved Failed";
+                return BadRequest(_response);
             }
-            return Ok(response);
+            _response.IsSuccess = true;
+            _response.Result = response;
+            return Ok(_response);
         }
 
         // POST api/<LeaveTypeController>
         [HttpPost]
-        [ProducesResponseType(201)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Post(BpkpRequest request)
         {
             var location = await _locationService.ExistAsync(request.LocationId);
             var userId = _userService.UserId;
-            var agreementNumber = Guid.NewGuid().ToString();
+            
             if (location == null)
             {
                 throw new ArgumentException("Invalid location ID");
             }
             Bpkb bpkb = new()
             {
-                AgreementNumber = agreementNumber,
+                AgreementNumber = request.AgreementNumber,
                 BranchId = request.BranchId,
                 BpkbNo = request.BpkbNo,
                 BpkbDateIn = request.BpkbDateIn,
