@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Technical.API.Models;
 using Technical.API.Models.Bpkp;
@@ -14,6 +15,7 @@ namespace Technical.API.Controllers
 {
     [Route("api/bpkp")]
     [ApiController]
+    [Authorize]
     public class BpkpController : ControllerBase
     {
         private readonly IBpkpService _bpkpService;

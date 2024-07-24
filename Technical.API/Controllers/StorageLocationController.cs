@@ -10,7 +10,7 @@ namespace Technical.API.Controllers
 {
     [Route("api/location")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class StorageLocationController : ControllerBase
     {
         private readonly ILocationService _locationService;
